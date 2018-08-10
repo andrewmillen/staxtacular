@@ -1,0 +1,623 @@
+//  =============================================================================
+//  Imports 
+//  =============================================================================
+
+@import 'normalize.scss';
+
+
+//  =============================================================================
+//  Variables
+//  =============================================================================
+
+$gold: #FDB913;
+$red: #EE413D;
+$tan: #FCE9C0;
+$brown: #541B1C;
+$white: #FFFFFF;
+
+$body: 'Factoria', sans-serif;
+$headline: 'Futana';
+
+
+//  =============================================================================
+//  Breakpoints
+//  =============================================================================
+
+$breakpoints: (
+  'small':  480px,
+  'medium': 768px,
+  'large':  992px,
+  'xlarge': 1200px,
+  'xxlarge': 1400px
+) !default;
+
+@mixin breakpoint($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
+
+
+//  =============================================================================
+//  Base
+//  =============================================================================
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 20px;
+    line-height: 1.6;
+    height: 100%;
+    color: $brown;
+    @include breakpoint(xlarge) {
+        font-size: 26px;
+    }
+}
+
+body {
+    background-color: $gold;
+    overflow-x: hidden;
+    height: 100%;
+    font-family: $body, $headline, sans-serif;
+}
+
+audio, canvas, iframe, img, svg, video {
+    vertical-align: middle;
+}
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+main {
+    padding-bottom: 2rem;
+}
+
+//  =============================================================================
+//  Typography
+//  =============================================================================
+
+::-moz-selection {
+    background: $gold;
+    text-shadow: none;
+}
+
+::selection {
+    background: $gold;
+    text-shadow: none;
+}
+
+small {
+    font-family: $body;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    padding: 0; 
+    margin: 0;
+    line-height: 1.45;
+}
+
+p {
+    line-height: 1.7;
+}
+
+h2 {
+    font-family: $headline;
+    line-height: 1;
+    font-size: 2.1em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    @include breakpoint(medium) {
+        font-size: 2.4;
+    }
+}
+
+h3 {
+    font-family: $headline;
+    line-height: 1;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+    h2, h3 {
+        line-height: 0;
+        padding-top: 1em;
+    }
+    #bigtext {
+        margin-top: 2em;
+    }
+}
+
+#bigtext div {
+    display: none;
+    @include breakpoint(small) {
+        display: block;
+        line-height: 1;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-family: $headline;
+        span {
+            color: $red;
+        }
+    }
+}
+
+// Button styles
+//
+.btn {
+    font-family: $headline;
+    font-size: 1.4em;
+    padding: 0.5rem 1.2rem;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    white-space: nowrap;
+
+    width: 100%;
+    text-align: center;
+    @include breakpoint(medium) {
+        width: auto;
+        text-align: left;
+    }
+    &:hover {
+        transform: scale(1.02);
+    }
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+    line-height: 0;
+    padding-top: 1.4em;
+    }
+}
+
+.btn-red {
+    background: $red;
+    color: $white;
+}
+
+.btn-yellow {
+    background: $gold;
+    color: $red;
+}
+
+.btn-brown {
+    background: $brown;
+    color: $gold;
+}
+
+//  =============================================================================
+//  Utilities
+//  =============================================================================
+
+
+.tan { background: $tan; }
+.brown { background: $brown; }
+.red { background: $red; }
+.gold { background: $gold; }
+
+.hidden { display: none !important; }
+.invisible { visibility: hidden; }
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+// Micro Clearfix
+.cf:before,
+.cf:after {
+    content: " "; // 1 
+    display: table; // 2 
+}
+
+.cf:after {
+    clear: both;
+}
+
+
+//  =============================================================================
+//  Flexible Content Structure
+//  =============================================================================
+
+// Put everything in a box
+.container {
+    width: calc(100% - 2rem); // Allows for left and ride margins on mobile
+    max-width: 1400px; // Doesn't get wider than this on large screens
+    margin: 0 auto;
+
+    background: url(../img/background.png) top center no-repeat transparent;
+    background-size: 100% auto;
+    padding-top: 22vw;
+    @include breakpoint(large) {
+        background-size: 80% auto;
+        padding-top: 200px;
+    }
+    @include breakpoint(xlarge) {
+        padding-top: 250px;
+    }
+}
+
+// Define the flex row on mobile
+.flex-row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+
+// Define the width of the flex item content boxes
+.flex_item {
+    -ms-flex-preferred-size: 33.32%;
+        flex-basis: 33.32%;
+}
+.flex_item-half {
+    -ms-flex-preferred-size: 50%;
+        flex-basis: 50%;
+}
+.flex_item-wide {
+    -ms-flex-preferred-size: 66.67%;
+        flex-basis: 66.67%
+}
+
+@include breakpoint(medium) {
+    // Switch to row on wider screens
+    .flex-row {
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
+    }
+    // Add gutters. Not a scalable solution, but because flex-wrap is set to nowrap, it doesn't need to be.
+    .module:not(:first-child) {
+        margin-left: 1em;
+    }
+}
+
+
+
+//  =============================================================================
+//  Modules
+//  =============================================================================
+
+// Global Rules
+.module {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    @include breakpoint(medium) {
+        padding: 2rem;
+    }
+    @include breakpoint(large) {
+        padding: 2rem;
+    }
+}
+
+// Individual Rules
+//
+
+#sponsored-by {
+    margin-bottom: 1rem;
+    @include breakpoint(medium) {
+        width: 40%;
+    }
+}
+#headline {
+    .logo {
+        margin-bottom: .4em;
+        max-width: 100%;
+    }
+    h2 {
+        font-size: 1.4em;
+        margin: .4rem 0 0;
+    }
+    .meta_sm {
+        h2 {
+            letter-spacing: 0;
+            span {
+                color: $red;
+            }
+        }
+        @include breakpoint(small) {
+            display: none;
+        }
+    }
+}
+
+#hosted-by {
+    color: $tan;
+    text-align: center;
+    small {
+        color: $gold;
+    }
+    h3 {
+        white-space: nowrap;
+        color: $white;
+    }
+    img { // Grizz
+        margin-top: 2rem;
+        display: block;
+        max-width: 150px;
+        margin: 1rem auto 0;
+        @include breakpoint(medium) {
+            max-width: 250px;
+        }
+    }
+    -webkit-box-ordinal-group: 3;
+        -ms-flex-order: 2;
+            order: 2;
+    @include breakpoint(medium) {
+        padding: 1.2rem 2rem;
+        -webkit-box-ordinal-group: 2;
+            -ms-flex-order: 1;
+                order: 1;
+    }
+}
+
+#intro {
+    p {
+        margin-bottom: 1rem;
+        a {
+            color: $red;
+            text-decoration: none;
+            &:hover {
+                color: $gold;
+            }
+        }
+    }
+    -webkit-box-ordinal-group: 2;
+        -ms-flex-order: 1;
+            order: 1;
+    @include breakpoint(medium) {
+        -webkit-box-ordinal-group: 3;
+            -ms-flex-order: 2;
+                order: 2;
+    }
+    position: relative;
+    z-index: 10;
+}
+
+#benefiting {
+    position: relative;
+    overflow: hidden;
+    small {
+        color: $red;
+    }
+    h2 {
+        color: #fff;
+        position: relative;
+        z-index: 3;
+        margin-bottom: 1rem;
+        @include breakpoint(medium) {
+            font-size: 1.6em;
+            margin-bottom: 0;
+        }
+        @include breakpoint(large) {
+            font-size: 2.4em;
+        }
+    }
+    .snap {
+            display: block;
+            position: absolute;
+            right: 10%;
+            bottom: 0;
+            z-index: 1;
+    }
+    .btn {
+        z-index: 4;
+    }
+    @include breakpoint(medium) {
+        padding: 1.2rem 2rem;
+        .snap {
+            right: 40%;
+            top: 50%;
+            bottom: auto;
+            -webkit-transform: translateY(-50%);
+                    transform: translateY(-50%);
+        }
+        .btn {
+            position: absolute;
+            right: 1em;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+                    transform: translateY(-50%);
+                    &:hover {
+                    -webkit-transform: scale(1.02) translateY(-49%);
+                            transform: scale(1.02) translateY(-49%);
+                    }
+        }
+    }
+}
+
+#ballers-ball, #silent-auction {
+    h3 {
+        color: $red;
+        margin-bottom: 0.4em;
+    }
+    .btn {
+        margin-top: 1em;
+    }
+    @include breakpoint(medium) {
+        p {
+            font-size: 0.9rem;
+        }
+    }
+}
+
+#something-fun {
+    color: $tan;
+    p {
+        font-size: 0.9rem;
+        margin-top: 1em;
+    }
+    h3 {
+        color: $white;
+    }
+    ul {
+        li {
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            @include breakpoint(medium) {
+                width: 80%;
+            }
+        }
+    }
+}
+
+#sp-list {
+    h3 {
+        text-align: center;
+        color: $gold;
+    }
+    hr {
+        background: $red;
+        height: 1px;
+        border: 0;
+    }
+}
+
+
+#purchase {
+    text-align: center;
+}
+
+
+
+//  =============================================================================
+//  Sponsor Matrix
+//  =============================================================================
+
+
+.sp-matrix {
+    margin-top: 2rem;
+    text-align: center;
+    position: relative;
+    clear: both;
+    hr {
+        margin: 1rem 0;
+    }
+}
+
+.sp-logo {
+    width: 100%;
+    height: auto;
+    padding: 1rem 0;
+    margin: 0;
+    display: inline-block;
+    img {
+        width: 70%;
+        margin-bottom: 1rem;
+    }
+}
+
+@include breakpoint(medium) {
+    .sp-logo {
+        width: auto;
+        float: left;
+        display: block;
+        position: relative;
+        margin: 0;
+        img {
+            max-width: 100%;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+    .presenting { width: 100%; height: 300px; }
+    .platinum { width: 48%; height: 200px;}
+    .medal { width: 20%; height: 200px; }
+    .supporting { width: 20%; height: 200px; }
+
+
+    #suntrust {
+        max-width: 400px;
+    }
+    #rvc {
+        width: 360px;
+    }
+
+    #orion {
+        width: 300px;
+    }
+
+    #nike {
+        width: 200px;
+    }
+
+    #mgf {
+        width: 400px;
+    }
+
+    #sg {
+        width: 150px;
+    }
+
+    #mdk {
+        width: 400px;
+    }
+    #reddlx {
+        width: 120px;
+    }
+}
+
+.sp-soul_supporters {
+    margin: 0 auto;
+    a {
+        text-decoration: none; 
+            color: $tan;
+        &:hover {
+            color: $gold;
+        }
+        h4 {
+            font-size: 0.8em;
+            @include breakpoint(medium) {
+                display: inline-block;
+                margin-right: 1rem;
+            }
+        }
+    }
+}
